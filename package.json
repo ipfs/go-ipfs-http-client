@@ -9,9 +9,9 @@
   "gxDependencies": [
     {
       "author": "why",
-      "hash": "QmRG3XuGwT7GYuAqgWDJBKTzdaHMwAnc1x7J2KHEXNHxzG",
+      "hash": "QmZErC2Ay6WuGi96CPg316PwitdwgLo6RxZRqVjJjRj2MR",
       "name": "go-path",
-      "version": "1.1.21"
+      "version": "1.1.25"
     },
     {
       "author": "mitchellh",
@@ -42,6 +42,18 @@
       "hash": "QmXWZCd8jfaHmt4UDSnjKmGcrQMw95bDGWqEeVLVJjoANX",
       "name": "go-ipfs-files",
       "version": "2.0.3"
+    },
+    {
+      "author": "whyrusleeping",
+      "hash": "QmckeQ2zrYLAXoSHYTGn5BDdb22BqbUoHEHm8KZ9YWRxd1",
+      "name": "iptb",
+      "version": "2.0.0"
+    },
+    {
+      "author": "travisperson",
+      "hash": "QmQLcRTxMtdUmmTse5uoqBLM5YZgjZP4qiCPynY6qEz6qA",
+      "name": "iptb-plugins",
+      "version": "1.0.8"
     }
   ],
   "gxVersion": "0.12.1",
