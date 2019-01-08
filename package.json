@@ -54,6 +54,12 @@
       "hash": "QmQLcRTxMtdUmmTse5uoqBLM5YZgjZP4qiCPynY6qEz6qA",
       "name": "iptb-plugins",
       "version": "1.0.8"
+    },
+    {
+      "author": "why",
+      "hash": "Qmbvw7kpSM2p6rbQ57WGRhhqNfCiNGW6EKH4xgHLw4bsnB",
+      "name": "go-unixfs",
+      "version": "1.2.10"
     }
   ],
   "gxVersion": "0.12.1",
