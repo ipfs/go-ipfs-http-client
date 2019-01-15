@@ -57,9 +57,9 @@
     },
     {
       "author": "why",
-      "hash": "QmUohX63q9ZqRUsLhDBWNUv2PDHVHNFtiT7yQZJBtYwRnN",
+      "hash": "QmQXze9tG878pa4Euya4rrDpyTNX3kQe4dhCaBzBozGgpe",
       "name": "go-unixfs",
-      "version": "1.2.14"
+      "version": "1.2.12"
     }
   ],
   "gxVersion": "0.12.1",
