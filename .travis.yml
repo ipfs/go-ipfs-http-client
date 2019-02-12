@@ -10,6 +10,8 @@ go:
 
 install:
   - make deps
+  - go get -d github.com/ipfs/go-ipfs
+  - (cd $GOPATH/src/github.com/ipfs/go-ipfs; make install)
 
 script:
   - bash <(curl -s https://raw.githubusercontent.com/ipfs/ci-helpers/master/travis-ci/run-standard-tests.sh)
