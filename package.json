@@ -4,7 +4,7 @@
     "url": "https://github.com/ipfs/go-ipfs-http-client"
   },
   "gx": {
-    "dvcsimport": "github.com/ipfs/go-ipfs-http-api"
+    "dvcsimport": "github.com/ipfs/go-ipfs-http-client"
   },
   "gxDependencies": [
     {
