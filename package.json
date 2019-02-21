@@ -85,6 +85,6 @@
   "license": "",
   "name": "go-ipfs-http-api",
   "releaseCmd": "git commit -a -m \"gx publish $VERSION\"",
-  "version": "0.0.1"
+  "version": "0.1.0"
 }
 
