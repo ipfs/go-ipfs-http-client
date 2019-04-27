@@ -15,7 +15,6 @@ env:
 
 # disable travis install
 install:
-  - make deps
   - go get -d github.com/ipfs/go-ipfs
   - (cd $GOPATH/src/github.com/ipfs/go-ipfs; make install)
 
@@ -25,7 +24,6 @@ script:
 
 cache:
   directories:
-    - $GOPATH/src/gx
     - $GOPATH/pkg/mod
     - $HOME/.cache/go-build
 
