@@ -2,7 +2,6 @@ package httpapi
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/ipfs/interface-go-ipfs-core"
@@ -80,7 +79,6 @@ func (api *SwarmAPI) Peers(ctx context.Context) ([]iface.ConnectionInfo, error) 
 		Option("latency", true).
 		Exec(ctx, &resp)
 	if err != nil {
-		fmt.Println("Request", err)
 		return nil, err
 	}
 
@@ -95,13 +93,11 @@ func (api *SwarmAPI) Peers(ctx context.Context) ([]iface.ConnectionInfo, error) 
 
 		out.peer, err = peer.IDB58Decode(conn.Peer)
 		if err != nil {
-			fmt.Println("out.peer", err)
 			return nil, err
 		}
 
 		out.addr, err = multiaddr.NewMultiaddr(conn.Addr)
 		if err != nil {
-			fmt.Println("out.addr", err)
 			return nil, err
 		}
 
