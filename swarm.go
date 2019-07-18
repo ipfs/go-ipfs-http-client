@@ -98,7 +98,8 @@ func (api *SwarmAPI) Peers(ctx context.Context) ([]iface.ConnectionInfo, error) 
 
 		out.addr, err = multiaddr.NewMultiaddr(conn.Addr)
 		if err != nil {
-			return nil, err
+			//ignore error for get some address like this:ip4/94.130.135.167/tcp/4002/ws/ipfs/QmUEMvxS2e7iDrereVYc5SWPauXPyNwxcy9BXZrC1QTcHE
+			continue
 		}
 
 		out.streams = make([]protocol.ID, len(conn.Streams))
