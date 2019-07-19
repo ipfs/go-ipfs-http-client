@@ -1,7 +1,6 @@
 package httpapi
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -70,12 +69,8 @@ func (r *Response) decode(dec interface{}) error {
 	if r.Error != nil {
 		return r.Error
 	}
-	b, e := ioutil.ReadAll(r.Output)
-	if e != nil {
-		return e
-	}
-	fmt.Println(string(b))
-	err := json.NewDecoder(bytes.NewBuffer(b)).Decode(dec)
+
+	err := json.NewDecoder(r.Output).Decode(dec)
 	err2 := r.Close()
 	if err != nil {
 		return err
