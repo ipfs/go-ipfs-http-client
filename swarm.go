@@ -98,8 +98,6 @@ func (api *SwarmAPI) Peers(ctx context.Context) ([]iface.ConnectionInfo, error) 
 
 		out.addr, err = multiaddr.NewMultiaddr(conn.Addr)
 		if err != nil {
-			//failed address: ip4/94.130.135.167/tcp/4002/ws/ipfs/QmUEMvxS2e7iDrereVYc5SWPauXPyNwxcy9BXZrC1QTcHE
-			//don't ignore. Let's just not set the addr and document this. Relates to multiformats/multiaddr#70.
 			return nil, err
 		}
 
