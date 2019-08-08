@@ -12,7 +12,7 @@ import (
 
 	iface "github.com/ipfs/interface-go-ipfs-core"
 	caopts "github.com/ipfs/interface-go-ipfs-core/options"
-	homedir "github.com/mitchellh/go-homedir"
+	"github.com/mitchellh/go-homedir"
 	ma "github.com/multiformats/go-multiaddr"
 	manet "github.com/multiformats/go-multiaddr-net"
 )
@@ -57,6 +57,19 @@ func NewLocalApi() (*HttpApi, error) {
 // ipfspath. Api file should be located at $ipfspath/api
 func NewPathApi(ipfspath string) (*HttpApi, error) {
 	a, err := ApiAddr(ipfspath)
+	if err != nil {
+		if os.IsNotExist(err) {
+			err = ErrApiNotFound
+		}
+		return nil, err
+	}
+	return NewApi(a)
+}
+
+// NewAddrApi constructs new HttpApi by pulling api address.
+// Api address should be set like /ip4/127.0.0.1/tcp/5001.
+func NewAddrApi(apiAddr string) (*HttpApi, error) {
+	a, err := ma.NewMultiaddr(strings.TrimSpace(apiAddr))
 	if err != nil {
 		if os.IsNotExist(err) {
 			err = ErrApiNotFound
