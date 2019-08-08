@@ -7,7 +7,7 @@ import (
 	"net/http"
 	gohttp "net/http"
 	"os"
-	"path"
+	"path/filepath"
 	"strings"
 
 	iface "github.com/ipfs/interface-go-ipfs-core"
@@ -73,7 +73,7 @@ func ApiAddr(ipfspath string) (ma.Multiaddr, error) {
 		return nil, err
 	}
 
-	apiFile := path.Join(baseDir, DefaultApiFile)
+	apiFile := filepath.Join(baseDir, DefaultApiFile)
 
 	api, err := ioutil.ReadFile(apiFile)
 	if err != nil {
