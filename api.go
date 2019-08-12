@@ -66,19 +66,6 @@ func NewPathApi(ipfspath string) (*HttpApi, error) {
 	return NewApi(a)
 }
 
-// NewAddrApi constructs new HttpApi by pulling api address.
-// Api address should be set like /ip4/127.0.0.1/tcp/5001.
-func NewAddrApi(apiAddr string) (*HttpApi, error) {
-	a, err := ma.NewMultiaddr(strings.TrimSpace(apiAddr))
-	if err != nil {
-		if os.IsNotExist(err) {
-			err = ErrApiNotFound
-		}
-		return nil, err
-	}
-	return NewApi(a)
-}
-
 // ApiAddr reads api file in specified ipfs path
 func ApiAddr(ipfspath string) (ma.Multiaddr, error) {
 	baseDir, err := homedir.Expand(ipfspath)
