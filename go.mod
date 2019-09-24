@@ -8,7 +8,7 @@ require (
 	github.com/ipfs/go-ipld-format v0.0.2
 	github.com/ipfs/go-merkledag v0.1.0
 	github.com/ipfs/go-path v0.0.7
-	github.com/ipfs/go-unixfs v0.1.0
+	github.com/ipfs/go-unixfs v0.2.1
 	github.com/ipfs/interface-go-ipfs-core v0.2.3
 	github.com/ipfs/iptb v1.4.0
 	github.com/ipfs/iptb-plugins v0.2.0
