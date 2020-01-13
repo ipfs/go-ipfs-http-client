@@ -17,7 +17,7 @@ require (
 	github.com/multiformats/go-multiaddr v0.1.2
 	github.com/multiformats/go-multiaddr-net v0.1.1
 	github.com/multiformats/go-multihash v0.0.9
-	github.com/pkg/errors v0.8.1
+	github.com/pkg/errors v0.9.0
 )
 
 go 1.12
