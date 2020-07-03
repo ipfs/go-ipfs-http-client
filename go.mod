@@ -16,7 +16,7 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/multiformats/go-multiaddr v0.2.1
 	github.com/multiformats/go-multiaddr-net v0.1.4
-	github.com/multiformats/go-multihash v0.0.13
+	github.com/multiformats/go-multihash v0.0.14
 	github.com/pkg/errors v0.9.1
 )
 
