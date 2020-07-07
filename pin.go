@@ -49,7 +49,7 @@ func (api *PinAPI) Add(ctx context.Context, p path.Path, opts ...caopts.PinAddOp
 		Option("recursive", options.Recursive).Exec(ctx, nil)
 }
 
-func (api *PinAPI) Ls(ctx context.Context, opts ...caopts.PinLsOption) ([]iface.Pin, error) {
+func (api *PinAPI) Ls(ctx context.Context, opts ...caopts.PinLsOption) (<-chan iface.Pin, error) {
 	options, err := caopts.PinLsOptions(opts...)
 	if err != nil {
 		return nil, err
@@ -62,15 +62,16 @@ func (api *PinAPI) Ls(ctx context.Context, opts ...caopts.PinLsOption) ([]iface.
 		return nil, err
 	}
 
-	pins := make([]iface.Pin, 0, len(out.Keys))
-	for hash, p := range out.Keys {
-		c, err := cid.Parse(hash)
-		if err != nil {
-			return nil, err
+	pins := make(chan iface.Pin)
+	go func(ch chan<- iface.Pin) {
+		for hash, p := range out.Keys {
+			c, err := cid.Parse(hash)
+			if err != nil {
+				return
+			}
+			ch <- &pin{typ: p.Type, path: path.IpldPath(c)}
 		}
-		pins = append(pins, &pin{typ: p.Type, path: path.IpldPath(c)})
-	}
-
+	}(pins)
 	return pins, nil
 }
 
