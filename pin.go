@@ -3,9 +3,9 @@ package httpapi
 import (
 	"context"
 	"encoding/json"
+	iface "github.com/ipfs/interface-go-ipfs-core"
 
 	"github.com/ipfs/go-cid"
-	"github.com/ipfs/interface-go-ipfs-core"
 	caopts "github.com/ipfs/interface-go-ipfs-core/options"
 	"github.com/ipfs/interface-go-ipfs-core/path"
 	"github.com/pkg/errors"
@@ -24,6 +24,11 @@ type pinRefKeyList struct {
 type pin struct {
 	path path.Resolved
 	typ  string
+	err  error
+}
+
+func (p *pin) Err() error {
+	return p.err
 }
 
 func (p *pin) Path() path.Resolved {
@@ -67,6 +72,32 @@ func (api *PinAPI) Ls(ctx context.Context, opts ...caopts.PinLsOption) ([]iface.
 	}
 
 	return pins, nil
+}
+
+// IsPinned returns whether or not the given cid is pinned
+// and an explanation of why its pinned
+func (api *PinAPI) IsPinned(ctx context.Context, p path.Path, opts ...caopts.PinIsPinnedOption) (string, bool, error) {
+	options, err := caopts.PinIsPinnedOptions(opts...)
+	if err != nil {
+		return "", false, err
+	}
+	var out pinRefKeyList
+	err = api.core().Request("pin/ls").
+		Option("type", options.WithType).
+		Option("arg", p.String()).
+		Exec(ctx, &out)
+	if err != nil {
+		return "", false, err
+	}
+
+	for hash := range out.Keys {
+		_, err := cid.Parse(hash)
+		if err != nil {
+			return "", false, err
+		}
+		return hash, true, nil
+	}
+	return "", false, errors.New("pin path not found")
 }
 
 func (api *PinAPI) Rm(ctx context.Context, p path.Path, opts ...caopts.PinRmOption) error {
