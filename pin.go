@@ -64,16 +64,17 @@ func (api *PinAPI) Ls(ctx context.Context, opts ...caopts.PinLsOption) (<-chan i
 
 	pins := make(chan iface.Pin)
 	go func(ch chan<- iface.Pin) {
+		defer close(ch)
 		for hash, p := range out.Keys {
-			c, err := cid.Parse(hash)
-			if err != nil {
+			c, e := cid.Parse(hash)
+			if e != nil {
+				err = e
 				return
 			}
 			ch <- &pin{typ: p.Type, path: path.IpldPath(c)}
 		}
-		close(ch)
 	}(pins)
-	return pins, nil
+	return pins, err
 }
 
 // IsPinned returns whether or not the given cid is pinned
