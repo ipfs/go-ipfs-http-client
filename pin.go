@@ -71,7 +71,7 @@ func (api *PinAPI) Ls(ctx context.Context, opts ...caopts.PinLsOption) (<-chan i
 			}
 			ch <- &pin{typ: p.Type, path: path.IpldPath(c)}
 		}
-		ch <- nil
+		close(ch)
 	}(pins)
 	return pins, nil
 }
