@@ -2,7 +2,7 @@ module github.com/ipfs/go-ipfs-http-client
 
 require (
 	github.com/ipfs/go-block-format v0.0.2
-	github.com/ipfs/go-cid v0.0.5
+	github.com/ipfs/go-cid v0.0.7
 	github.com/ipfs/go-ipfs-cmds v0.2.2
 	github.com/ipfs/go-ipfs-files v0.0.8
 	github.com/ipfs/go-ipld-format v0.2.0
