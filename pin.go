@@ -93,12 +93,8 @@ func (api *PinAPI) IsPinned(ctx context.Context, p path.Path, opts ...caopts.Pin
 		return "", false, err
 	}
 
-	for hash := range out.Keys {
-		_, err := cid.Parse(hash)
-		if err != nil {
-			return "", false, err
-		}
-		return hash, true, nil
+	for _, obj := range out.Keys {
+		return obj.Type, true, nil
 	}
 	return "", false, errors.New("pin path not found")
 }
