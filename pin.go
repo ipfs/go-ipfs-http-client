@@ -100,7 +100,7 @@ func (api *PinAPI) IsPinned(ctx context.Context, p path.Path, opts ...caopts.Pin
 	for _, obj := range out.Keys {
 		return obj.Type, true, nil
 	}
-	return "", false, errors.New("pin path not found")
+	panic("unreachable")
 }
 
 func (api *PinAPI) Rm(ctx context.Context, p path.Path, opts ...caopts.PinRmOption) error {
