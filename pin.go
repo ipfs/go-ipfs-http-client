@@ -3,12 +3,13 @@ package httpapi
 import (
 	"context"
 	"encoding/json"
+	"strings"
+
 	"github.com/ipfs/go-cid"
 	iface "github.com/ipfs/interface-go-ipfs-core"
 	caopts "github.com/ipfs/interface-go-ipfs-core/options"
 	"github.com/ipfs/interface-go-ipfs-core/path"
 	"github.com/pkg/errors"
-	"strings"
 )
 
 type PinAPI HttpApi
@@ -91,6 +92,7 @@ func (api *PinAPI) IsPinned(ctx context.Context, p path.Path, opts ...caopts.Pin
 		Exec(ctx, &out)
 	if err != nil {
 		//need an err type,or a constant value to compare
+		// TODO: XXX
 		if strings.Index(err.Error(), "is not pinned") != -1 {
 			return "", false, nil
 		}
@@ -100,7 +102,7 @@ func (api *PinAPI) IsPinned(ctx context.Context, p path.Path, opts ...caopts.Pin
 	for _, obj := range out.Keys {
 		return obj.Type, true, nil
 	}
-	return "", false, errors.New("pin path not found")
+	return "", false, errors.New("http api returned no error and no results")
 }
 
 func (api *PinAPI) Rm(ctx context.Context, p path.Path, opts ...caopts.PinRmOption) error {
