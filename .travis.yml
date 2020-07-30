@@ -16,7 +16,7 @@ env:
 
 # disable travis install
 install:
-  - (cd /tmp && go get github.com/ipfs/go-ipfs/cmd/ipfs@v0.5.0-rc2)
+  - (cd /tmp && go get github.com/ipfs/go-ipfs/cmd/ipfs@v0.6.0)
 
 script:
   - bash <(curl -s https://raw.githubusercontent.com/ipfs/ci-helpers/master/travis-ci/run-standard-tests.sh)
