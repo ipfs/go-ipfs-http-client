@@ -4,6 +4,6 @@ description: install go-ipfs
 runs:
   using: "composite"
   steps:
-    - name: Step 1
+    - name: Install go-ipfs
       shell: bash
       run: (cd /tmp && go install github.com/ipfs/go-ipfs/cmd/ipfs@master)
