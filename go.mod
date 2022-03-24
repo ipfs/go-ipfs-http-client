@@ -5,11 +5,11 @@ require (
 	github.com/ipfs/go-cid v0.0.7
 	github.com/ipfs/go-ipfs-cmds v0.6.0
 	github.com/ipfs/go-ipfs-files v0.0.8
-	github.com/ipfs/go-ipld-format v0.2.0
-	github.com/ipfs/go-merkledag v0.4.0
+	github.com/ipfs/go-ipld-format v0.3.1-0.20220324162916-510957b2b090
+	github.com/ipfs/go-merkledag v0.6.0
 	github.com/ipfs/go-path v0.1.1
 	github.com/ipfs/go-unixfs v0.2.5
-	github.com/ipfs/interface-go-ipfs-core v0.5.2
+	github.com/ipfs/interface-go-ipfs-core v0.6.1
 	github.com/ipfs/iptb v1.4.0
 	github.com/ipfs/iptb-plugins v0.3.0
 	github.com/libp2p/go-libp2p-core v0.8.6
