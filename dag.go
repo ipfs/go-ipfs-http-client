@@ -11,6 +11,7 @@ import (
 	"github.com/ipfs/go-ipld-format"
 	"github.com/ipfs/interface-go-ipfs-core/options"
 	"github.com/ipfs/interface-go-ipfs-core/path"
+	"github.com/multiformats/go-multihash"
 )
 
 type httpNodeAdder HttpApi
@@ -56,7 +57,7 @@ func (api *HttpDagServ) GetMany(ctx context.Context, cids []cid.Cid) <-chan *for
 func (api *httpNodeAdder) add(ctx context.Context, nd format.Node, pin bool) error {
 	c := nd.Cid()
 	prefix := c.Prefix()
-	format := cid.CodecToStr[prefix.Codec]
+	format := multihash.Codes[prefix.Codec]
 	if prefix.Version == 0 {
 		format = "v0"
 	}
