@@ -6,4 +6,4 @@ runs:
   steps:
     - name: Install kubo
       shell: bash
-      run: (cd /tmp && go install github.com/ipfs/kubo/cmd/ipfs@master)
+      run: (cd /tmp && go install github.com/ipfs/kubo/cmd/ipfs@v0.16.0-rc1)
