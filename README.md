@@ -41,7 +41,8 @@ func main() {
     }
     // Pin a given file by its CID
     ctx := context.Background()
-    p := path.New(c)
+    cid := "bafkreidtuosuw37f5xmn65b3ksdiikajy7pwjjslzj2lxxz2vc4wdy3zku"
+    p := path.New(cid)
     err = node.Pin().Add(ctx, p)
     if err != nil {
     	fmt.Printf(err)
