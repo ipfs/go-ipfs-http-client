@@ -25,20 +25,20 @@ Pin file on your local IPFS node based on its CID:
 package main
 
 import (
-"context"
-"fmt"
+    "context"
+    "fmt"
 
-ipfsClient "github.com/ipfs/go-ipfs-http-client"
-path "github.com/ipfs/interface-go-ipfs-core/path"
+    ipfsClient "github.com/ipfs/go-ipfs-http-client"
+    path "github.com/ipfs/interface-go-ipfs-core/path"
 )
 
 func main() {
-// "Connect" to local node
-node, err := ipfsClient.NewLocalApi()
-if err != nil {
-    fmt.Printf(err)
-    return
-}
+    // "Connect" to local node
+    node, err := ipfsClient.NewLocalApi()
+    if err != nil {
+        fmt.Printf(err)
+        return
+    }
     // Pin a given file by its CID
 	ctx := context.Background()
     p := path.New(c)
