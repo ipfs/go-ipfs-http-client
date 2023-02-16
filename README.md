@@ -44,10 +44,10 @@ func main() {
     p := path.New(c)
     err = node.Pin().Add(ctx, p)
     if err != nil {
-		fmt.Printf(err)
+    	fmt.Printf(err)
         return
     }
-	return
+    return
 }
 ```
 
