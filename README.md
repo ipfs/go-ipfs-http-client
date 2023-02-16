@@ -40,7 +40,7 @@ func main() {
         return
     }
     // Pin a given file by its CID
-	ctx := context.Background()
+    ctx := context.Background()
     p := path.New(c)
     err = node.Pin().Add(ctx, p)
     if err != nil {
