@@ -1,215 +1,109 @@
+// Deprecated: This repo has moved inside Kubo in order to make it easier to
+// keep kubo and the http-client in sync, please use github.com/ipfs/kubo/client/rpc instead.
 package httpapi
 
 import (
-	"errors"
-	"fmt"
+	"context"
 	"net/http"
-	"os"
-	"path/filepath"
-	"strings"
 
-	iface "github.com/ipfs/boxo/coreiface"
-	caopts "github.com/ipfs/boxo/coreiface/options"
-	"github.com/mitchellh/go-homedir"
+	"github.com/ipfs/kubo/client/rpc"
 	ma "github.com/multiformats/go-multiaddr"
-	manet "github.com/multiformats/go-multiaddr/net"
 )
 
-const (
-	DefaultPathName = ".ipfs"
-	DefaultPathRoot = "~/" + DefaultPathName
-	DefaultApiFile  = "api"
-	EnvDir          = "IPFS_PATH"
-)
+// Deprecated: use [rpc.DefaultPathName] instead.
+const DefaultPathName = rpc.DefaultPathName
 
-// ErrApiNotFound if we fail to find a running daemon.
-var ErrApiNotFound = errors.New("ipfs api address could not be found")
+// Deprecated: use [rpc.DefaultPathRoot] instead.
+const DefaultPathRoot = rpc.DefaultPathRoot
 
-// HttpApi implements github.com/ipfs/interface-go-ipfs-core/CoreAPI using
-// IPFS HTTP API.
-//
-// For interface docs see
-// https://godoc.org/github.com/ipfs/interface-go-ipfs-core#CoreAPI
-type HttpApi struct {
-	url         string
-	httpcli     http.Client
-	Headers     http.Header
-	applyGlobal func(*requestBuilder)
-}
+// Deprecated: use [rpc.DefaultApiFile] instead.
+const DefaultApiFile = rpc.DefaultApiFile
 
-// NewLocalApi tries to construct new HttpApi instance communicating with local
-// IPFS daemon
-//
-// Daemon api address is pulled from the $IPFS_PATH/api file.
-// If $IPFS_PATH env var is not present, it defaults to ~/.ipfs
+// Deprecated: use [rpc.EnvDir] instead.
+const EnvDir = rpc.EnvDir
+
+// Deprecated: use [rpc.ErrApiNotFound] instead.
+var ErrApiNotFound = rpc.ErrApiNotFound
+
+// Deprecated: use [rpc.HttpApi] instead.
+type HttpApi = rpc.HttpApi
+
+// Deprecated: use [rpc.BlockAPI] instead.
+type BlockAPI = rpc.BlockAPI
+
+// Deprecated: use [rpc.HttpDagServ] instead.
+type HttpDagServ = rpc.HttpDagServ
+
+// Deprecated: use [rpc.DhtAPI] instead.
+type DhtAPI = rpc.DhtAPI
+
+// Deprecated: use [rpc.KeyAPI] instead.
+type KeyAPI = rpc.KeyAPI
+
+// Deprecated: use [rpc.NameAPI] instead.
+type NameAPI = rpc.NameAPI
+
+// Deprecated: use [rpc.ObjectAPI] instead.
+type ObjectAPI = rpc.ObjectAPI
+
+// Deprecated: use [rpc.PinAPI] instead.
+type PinAPI = rpc.PinAPI
+
+// Deprecated: use [rpc.PubsubAPI] instead.
+type PubsubAPI = rpc.PubsubAPI
+
+// Deprecated: use [rpc.RoutingAPI] instead.
+type RoutingAPI = rpc.RoutingAPI
+
+// Deprecated: use [rpc.SwarmAPI] instead.
+type SwarmAPI = rpc.SwarmAPI
+
+// Deprecated: use [rpc.UnixfsAPI] instead.
+type UnixfsAPI = rpc.UnixfsAPI
+
+// Deprecated: use [rpc.NewLocalApi] instead.
 func NewLocalApi() (*HttpApi, error) {
-	baseDir := os.Getenv(EnvDir)
-	if baseDir == "" {
-		baseDir = DefaultPathRoot
-	}
-
-	return NewPathApi(baseDir)
+	return rpc.NewLocalApi()
 }
 
-// NewPathApi constructs new HttpApi by pulling api address from specified
-// ipfspath. Api file should be located at $ipfspath/api
+// Deprecated: use [rpc.NewPathApi] instead.
 func NewPathApi(ipfspath string) (*HttpApi, error) {
-	a, err := ApiAddr(ipfspath)
-	if err != nil {
-		if os.IsNotExist(err) {
-			err = ErrApiNotFound
-		}
-		return nil, err
-	}
-	return NewApi(a)
+	return rpc.NewPathApi(ipfspath)
 }
 
-// ApiAddr reads api file in specified ipfs path
+// Deprecated: use [rpc.ApiAddr] instead.
 func ApiAddr(ipfspath string) (ma.Multiaddr, error) {
-	baseDir, err := homedir.Expand(ipfspath)
-	if err != nil {
-		return nil, err
-	}
-
-	apiFile := filepath.Join(baseDir, DefaultApiFile)
-
-	api, err := os.ReadFile(apiFile)
-	if err != nil {
-		return nil, err
-	}
-
-	return ma.NewMultiaddr(strings.TrimSpace(string(api)))
+	return rpc.ApiAddr(ipfspath)
 }
 
-// NewApi constructs HttpApi with specified endpoint
+// Deprecated: use [rpc.NewApi] instead.
 func NewApi(a ma.Multiaddr) (*HttpApi, error) {
-	c := &http.Client{
-		Transport: &http.Transport{
-			Proxy:             http.ProxyFromEnvironment,
-			DisableKeepAlives: true,
-		},
-	}
-
-	return NewApiWithClient(a, c)
+	return rpc.NewApi(a)
 }
 
-// NewApiWithClient constructs HttpApi with specified endpoint and custom http client
+// Deprecated: use [rpc.NewApiWithClient] instead.
 func NewApiWithClient(a ma.Multiaddr, c *http.Client) (*HttpApi, error) {
-	_, url, err := manet.DialArgs(a)
-	if err != nil {
-		return nil, err
-	}
-
-	if a, err := ma.NewMultiaddr(url); err == nil {
-		_, host, err := manet.DialArgs(a)
-		if err == nil {
-			url = host
-		}
-	}
-
-	proto := "http://"
-
-	// By default, DialArgs is going to provide details suitable for connecting
-	// a socket to, but not really suitable for making an informed choice of http
-	// protocol.  For multiaddresses specifying tls and/or https we want to make
-	// a https request instead of a http request.
-	protocols := a.Protocols()
-	for _, p := range protocols {
-		if p.Code == ma.P_HTTPS || p.Code == ma.P_TLS {
-			proto = "https://"
-			break
-		}
-	}
-
-	return NewURLApiWithClient(proto+url, c)
+	return rpc.NewApiWithClient(a, c)
 }
 
+// Deprecated: use [rpc.NewURLApiWithClient] instead.
 func NewURLApiWithClient(url string, c *http.Client) (*HttpApi, error) {
-	api := &HttpApi{
-		url:         url,
-		httpcli:     *c,
-		Headers:     make(map[string][]string),
-		applyGlobal: func(*requestBuilder) {},
-	}
-
-	// We don't support redirects.
-	api.httpcli.CheckRedirect = func(_ *http.Request, _ []*http.Request) error {
-		return fmt.Errorf("unexpected redirect")
-	}
-	return api, nil
+	return rpc.NewURLApiWithClient(url, c)
 }
 
-func (api *HttpApi) WithOptions(opts ...caopts.ApiOption) (iface.CoreAPI, error) {
-	options, err := caopts.ApiOptions(opts...)
-	if err != nil {
-		return nil, err
-	}
+// Deprecated: use [rpc.Request] instead.
+type Request = rpc.Request
 
-	subApi := *api
-	subApi.applyGlobal = func(req *requestBuilder) {
-		if options.Offline {
-			req.Option("offline", options.Offline)
-		}
-	}
-
-	return &subApi, nil
+// Deprecated: use [rpc.NewRequest] instead.
+func NewRequest(ctx context.Context, url, command string, args ...string) *Request {
+	return rpc.NewRequest(ctx, url, command, args...)
 }
 
-func (api *HttpApi) Request(command string, args ...string) RequestBuilder {
-	headers := make(map[string]string)
-	if api.Headers != nil {
-		for k := range api.Headers {
-			headers[k] = api.Headers.Get(k)
-		}
-	}
-	return &requestBuilder{
-		command: command,
-		args:    args,
-		shell:   api,
-		headers: headers,
-	}
-}
+// Deprecated: use [rpc.RequestBuilder] instead.
+type RequestBuilder = rpc.RequestBuilder
 
-func (api *HttpApi) Unixfs() iface.UnixfsAPI {
-	return (*UnixfsAPI)(api)
-}
+// Deprecated: use [rpc.Error] instead.
+type Error = rpc.Error
 
-func (api *HttpApi) Block() iface.BlockAPI {
-	return (*BlockAPI)(api)
-}
-
-func (api *HttpApi) Dag() iface.APIDagService {
-	return (*HttpDagServ)(api)
-}
-
-func (api *HttpApi) Name() iface.NameAPI {
-	return (*NameAPI)(api)
-}
-
-func (api *HttpApi) Key() iface.KeyAPI {
-	return (*KeyAPI)(api)
-}
-
-func (api *HttpApi) Pin() iface.PinAPI {
-	return (*PinAPI)(api)
-}
-
-func (api *HttpApi) Object() iface.ObjectAPI {
-	return (*ObjectAPI)(api)
-}
-
-func (api *HttpApi) Dht() iface.DhtAPI {
-	return (*DhtAPI)(api)
-}
-
-func (api *HttpApi) Swarm() iface.SwarmAPI {
-	return (*SwarmAPI)(api)
-}
-
-func (api *HttpApi) PubSub() iface.PubSubAPI {
-	return (*PubsubAPI)(api)
-}
-
-func (api *HttpApi) Routing() iface.RoutingAPI {
-	return (*RoutingAPI)(api)
-}
+// Deprecated: use [rpc.Response] instead.
+type Response = rpc.Response
